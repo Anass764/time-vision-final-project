@@ -4,7 +4,23 @@ import { Play, Pause, Volume2, Sparkles } from 'lucide-react';
 
 const VideoSection: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentVideo, setCurrentVideo] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const videos = [
+    {
+      id: 'mg6Gf7v455c',
+      title: 'L\'Art de l\'Horlogerie Suisse',
+      description: 'Découvrez les secrets de fabrication des montres de luxe',
+      thumbnail: 'https://img.youtube.com/vi/mg6Gf7v455c/maxresdefault.jpg'
+    },
+    {
+      id: 'aHNEZg35ok8',
+      title: 'Excellence Optique',
+      description: 'L\'artisanat derrière nos lunettes de prestige',
+      thumbnail: 'https://img.youtube.com/vi/aHNEZg35ok8/maxresdefault.jpg'
+    }
+  ];
 
   const toggleVideo = () => {
     if (videoRef.current) {
@@ -14,6 +30,14 @@ const VideoSection: React.FC = () => {
         videoRef.current.play();
       }
       setIsPlaying(!isPlaying);
+    }
+  };
+
+  const switchVideo = (index: number) => {
+    setCurrentVideo(index);
+    setIsPlaying(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
     }
   };
 
@@ -104,59 +128,17 @@ const VideoSection: React.FC = () => {
             className="relative group"
           >
             <div className="aspect-video bg-gradient-to-br from-luxury-gold/20 to-luxury-darkGold/20 rounded-2xl overflow-hidden relative border border-luxury-gold/30 shadow-2xl">
-              {/* Working Video */}
-              <video
+              {/* YouTube Embed */}
+              <iframe
                 ref={videoRef}
-                className="w-full h-full object-cover"
-                poster="https://images.pexels.com/photos/364822/pexels-photo-364822.jpeg?auto=compress&cs=tinysrgb&w=800"
-                muted
-                loop
-                playsInline
-                onPlay={() => setIsPlaying(true)}
-                onPause={() => setIsPlaying(false)}
-              >
-                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
-                <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
-              </video>
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${videos[currentVideo].id}?autoplay=0&mute=1&controls=1&rel=0&modestbranding=1`}
+                title={videos[currentVideo].title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
               
-              {/* Play Button Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-20 h-20 bg-luxury-gold rounded-full flex items-center justify-center cursor-pointer shadow-2xl group-hover:shadow-luxury-gold/50 transition-all duration-300 relative"
-                  onClick={toggleVideo}
-                >
-                  {isPlaying ? (
-                    <Pause className="text-luxury-obsidian w-8 h-8" />
-                  ) : (
-                    <Play className="text-luxury-obsidian w-8 h-8 ml-1" />
-                  )}
-                  
-                  {/* Ripple Effect */}
-                  <motion.div
-                    className="absolute inset-0 border-2 border-luxury-gold rounded-full"
-                    animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                </motion.div>
-              </div>
-
-              {/* Video Controls */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="flex items-center space-x-4">
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-luxury-gold/80 transition-colors duration-300"
-                  >
-                    <Volume2 size={18} />
-                  </motion.button>
-                </div>
-                <div className="text-white text-sm font-medium bg-black/50 px-3 py-1 rounded-full">
-                  {isPlaying ? 'En cours...' : 'Cliquez pour lire'}
-                </div>
-              </div>
-
               {/* 3D Floating Elements */}
               <motion.div
                 className="absolute top-4 right-4 w-6 h-6 bg-luxury-gold/50 rounded-full opacity-0 group-hover:opacity-100"
@@ -172,14 +154,29 @@ const VideoSection: React.FC = () => {
               />
             </div>
 
-            {/* Video Title */}
-            <div className="mt-6">
-              <h3 className="text-2xl font-playfair font-semibold text-white mb-2">
-                Savoir-Faire Artisanal
-              </h3>
-              <p className="text-neutral-300">
-                Découvrez les secrets de fabrication de nos montres suisses
-              </p>
+            {/* Video Selection */}
+            <div className="mt-6 flex space-x-4">
+              {videos.map((video, index) => (
+                <motion.button
+                  key={video.id}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => switchVideo(index)}
+                  className={`flex-1 p-4 rounded-xl border-2 transition-all duration-300 ${
+                    currentVideo === index
+                      ? 'border-luxury-gold bg-luxury-gold/10'
+                      : 'border-neutral-600 hover:border-luxury-gold/50'
+                  }`}
+                >
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full aspect-video object-cover rounded-lg mb-3"
+                  />
+                  <h4 className="text-white font-semibold text-sm mb-1">{video.title}</h4>
+                  <p className="text-neutral-400 text-xs">{video.description}</p>
+                </motion.button>
+              ))}
             </div>
           </motion.div>
 

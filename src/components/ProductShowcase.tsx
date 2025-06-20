@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, Heart, ShoppingCart, Star } from 'lucide-react';
 
@@ -20,7 +20,7 @@ const products: Product[] = [
   {
     id: 1,
     name: 'Montre Royale Or',
-    price: '12,500 DH',
+    price: '12,500.00',
     image: 'https://images.pexels.com/photos/364822/pexels-photo-364822.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'montre',
     rating: 5,
@@ -29,7 +29,7 @@ const products: Product[] = [
   {
     id: 2,
     name: 'Lunettes Prestige',
-    price: '3,200 DH',
+    price: '3,200.00',
     image: 'https://images.pexels.com/photos/701877/pexels-photo-701877.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'lunette',
     rating: 5,
@@ -37,7 +37,7 @@ const products: Product[] = [
   {
     id: 3,
     name: 'Montre Élégance',
-    price: '8,900 DH',
+    price: '8,900.00',
     image: 'https://images.pexels.com/photos/277390/pexels-photo-277390.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'montre',
     rating: 4.8,
@@ -45,7 +45,7 @@ const products: Product[] = [
   {
     id: 4,
     name: 'Lunettes Aviateur Luxe',
-    price: '2,800 DH',
+    price: '2,800.00',
     image: 'https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'lunette',
     rating: 4.9,
@@ -54,7 +54,7 @@ const products: Product[] = [
   {
     id: 5,
     name: 'Montre Diamant',
-    price: '25,000 DH',
+    price: '25,000.00',
     image: 'https://images.pexels.com/photos/1697214/pexels-photo-1697214.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'montre',
     rating: 5,
@@ -63,7 +63,7 @@ const products: Product[] = [
   {
     id: 6,
     name: 'Lunettes Sport Luxe',
-    price: '4,500 DH',
+    price: '4,500.00',
     image: 'https://images.pexels.com/photos/46710/pexels-photo-46710.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'lunette',
     rating: 4.7,
@@ -71,7 +71,7 @@ const products: Product[] = [
   {
     id: 7,
     name: 'Montre Chronographe',
-    price: '15,800 DH',
+    price: '15,800.00',
     image: 'https://images.pexels.com/photos/125779/pexels-photo-125779.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'montre',
     rating: 4.9,
@@ -80,7 +80,7 @@ const products: Product[] = [
   {
     id: 8,
     name: 'Lunettes Cat Eye',
-    price: '3,900 DH',
+    price: '3,900.00',
     image: 'https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'lunette',
     rating: 4.8,
@@ -88,7 +88,7 @@ const products: Product[] = [
   {
     id: 9,
     name: 'Montre Automatique',
-    price: '18,500 DH',
+    price: '18,500.00',
     image: 'https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'montre',
     rating: 5,
@@ -96,7 +96,7 @@ const products: Product[] = [
   {
     id: 10,
     name: 'Lunettes Vintage',
-    price: '2,600 DH',
+    price: '2,600.00',
     image: 'https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'lunette',
     rating: 4.6,
@@ -104,7 +104,7 @@ const products: Product[] = [
   {
     id: 11,
     name: 'Montre Smart Luxe',
-    price: '22,000 DH',
+    price: '22,000.00',
     image: 'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'montre',
     rating: 4.7,
@@ -113,7 +113,7 @@ const products: Product[] = [
   {
     id: 12,
     name: 'Lunettes Polarisées',
-    price: '5,200 DH',
+    price: '5,200.00',
     image: 'https://images.pexels.com/photos/46710/pexels-photo-46710.jpeg?auto=compress&cs=tinysrgb&w=600',
     category: 'lunette',
     rating: 4.9,
@@ -121,8 +121,27 @@ const products: Product[] = [
 ];
 
 const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onAddToCart }) => {
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const [viewedProducts, setViewedProducts] = useState<number[]>([]);
+  
   const montres = products.filter(p => p.category === 'montre');
   const lunettes = products.filter(p => p.category === 'lunette');
+
+  const toggleFavorite = (productId: number) => {
+    setFavorites(prev => 
+      prev.includes(productId) 
+        ? prev.filter(id => id !== productId)
+        : [...prev, productId]
+    );
+  };
+
+  const viewProduct = (productId: number) => {
+    setViewedProducts(prev => 
+      prev.includes(productId) ? prev : [...prev, productId]
+    );
+    // Here you could open a product detail modal
+    console.log('Viewing product:', productId);
+  };
 
   const scrollToCollection = () => {
     const element = document.getElementById('montres');
@@ -142,8 +161,8 @@ const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onAddToCart }) => {
     >
       {product.isNew && (
         <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
+          initial={{ scale: 0, rotate: -45 }}
+          animate={{ scale: 1, rotate: 0 }}
           className="absolute top-4 left-4 z-10 bg-luxury-gold text-luxury-obsidian px-3 py-1 rounded-full text-sm font-bold shadow-lg"
         >
           Nouveau
@@ -155,6 +174,10 @@ const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onAddToCart }) => {
           src={product.image}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = 'https://images.pexels.com/photos/364822/pexels-photo-364822.jpeg?auto=compress&cs=tinysrgb&w=600';
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-luxury-obsidian/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         
@@ -162,13 +185,19 @@ const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onAddToCart }) => {
           <motion.button
             whileHover={{ scale: 1.1, rotate: 10 }}
             whileTap={{ scale: 0.9 }}
-            className="p-2 bg-white/90 backdrop-blur-sm text-luxury-obsidian rounded-full hover:bg-luxury-gold hover:text-white transition-colors duration-300 shadow-lg"
+            onClick={() => toggleFavorite(product.id)}
+            className={`p-2 backdrop-blur-sm rounded-full transition-all duration-300 shadow-lg ${
+              favorites.includes(product.id)
+                ? 'bg-luxury-gold text-white'
+                : 'bg-white/90 text-luxury-obsidian hover:bg-luxury-gold hover:text-white'
+            }`}
           >
-            <Heart size={18} />
+            <Heart size={18} className={favorites.includes(product.id) ? 'fill-current' : ''} />
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.1, rotate: -10 }}
             whileTap={{ scale: 0.9 }}
+            onClick={() => viewProduct(product.id)}
             className="p-2 bg-white/90 backdrop-blur-sm text-luxury-obsidian rounded-full hover:bg-luxury-gold hover:text-white transition-colors duration-300 shadow-lg"
           >
             <Eye size={18} />
@@ -188,6 +217,56 @@ const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onAddToCart }) => {
             ease: "easeInOut" 
           }}
         />
+
+        {/* 3D Responsive Model Overlay */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          initial={{ scale: 0, rotateY: -90 }}
+          whileHover={{ scale: 1, rotateY: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="w-32 h-32 relative">
+            {product.category === 'montre' ? (
+              <motion.div
+                className="w-full h-full border-4 border-luxury-gold rounded-full relative shadow-2xl bg-luxury-obsidian/80 backdrop-blur-sm"
+                animate={{ 
+                  rotateY: [0, 360],
+                  rotateX: [0, 15, 0, -15, 0],
+                }}
+                transition={{ 
+                  duration: 8, 
+                  repeat: Infinity, 
+                  ease: "linear" 
+                }}
+              >
+                <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-6 bg-luxury-gold rounded-full"></div>
+                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-6 bg-luxury-gold rounded-full"></div>
+                <div className="absolute left-2 top-1/2 transform -translate-y-1/2 w-6 h-1 bg-luxury-gold rounded-full"></div>
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 w-6 h-1 bg-luxury-gold rounded-full"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-luxury-gold rounded-full"></div>
+              </motion.div>
+            ) : (
+              <motion.div
+                className="w-full h-16 relative"
+                animate={{ 
+                  rotateZ: [0, 10, -10, 0],
+                  y: [0, -10, 0],
+                }}
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              >
+                <div className="flex items-center justify-center space-x-2">
+                  <div className="w-12 h-12 border-4 border-luxury-gold rounded-full bg-luxury-obsidian/80 backdrop-blur-sm"></div>
+                  <div className="w-4 h-1 bg-luxury-gold rounded-full"></div>
+                  <div className="w-12 h-12 border-4 border-luxury-gold rounded-full bg-luxury-obsidian/80 backdrop-blur-sm"></div>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
       </div>
       
       <div className="p-6 bg-gradient-to-br from-neutral-800 to-luxury-obsidian">
@@ -200,16 +279,21 @@ const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onAddToCart }) => {
             <span className="text-sm text-luxury-gold font-semibold">{product.rating}</span>
           </div>
         </div>
-        <p className="text-2xl font-bold text-luxury-gold mb-4">{product.price}</p>
+        <p className="text-2xl font-bold text-luxury-gold mb-4">{product.price} DH</p>
         
         <motion.button
           whileHover={{ scale: 1.02, y: -2 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => onAddToCart(product)}
-          className="w-full bg-luxury-gold text-luxury-obsidian py-3 rounded-full font-bold hover:bg-white transition-all duration-300 flex items-center justify-center space-x-2 group shadow-lg hover:shadow-2xl"
+          className="w-full bg-luxury-gold text-luxury-obsidian py-3 rounded-full font-bold hover:bg-white transition-all duration-300 flex items-center justify-center space-x-2 group shadow-lg hover:shadow-2xl relative overflow-hidden"
         >
           <ShoppingCart size={18} className="group-hover:scale-110 transition-transform duration-300" />
-          <span>Ajouter au Panier</span>
+          <span className="relative z-10">Ajouter au Panier</span>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            animate={{ x: ['-100%', '100%'] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          />
         </motion.button>
       </div>
     </motion.div>
@@ -253,9 +337,14 @@ const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onAddToCart }) => {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={scrollToCollection}
-              className="bg-luxury-gold text-luxury-obsidian px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all duration-300 shadow-lg hover:shadow-2xl"
+              className="bg-luxury-gold text-luxury-obsidian px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all duration-300 shadow-lg hover:shadow-2xl relative overflow-hidden group"
             >
-              Découvrir la Collection
+              <span className="relative z-10">Découvrir la Collection</span>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                animate={{ x: ['-100%', '100%'] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              />
             </motion.button>
           </motion.div>
         </div>
