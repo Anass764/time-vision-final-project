@@ -1,0 +1,367 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Eye, Heart, ShoppingCart, Star } from 'lucide-react';
+
+interface Product {
+  id: number;
+  name: string;
+  price: string;
+  image: string;
+  category: 'montre' | 'lunette';
+  rating: number;
+  isNew?: boolean;
+}
+
+interface ProductShowcaseProps {
+  onAddToCart: (product: Product) => void;
+}
+
+const products: Product[] = [
+  {
+    id: 1,
+    name: 'Montre Royale Or',
+    price: '12,500 DH',
+    image: 'https://images.pexels.com/photos/364822/pexels-photo-364822.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'montre',
+    rating: 5,
+    isNew: true,
+  },
+  {
+    id: 2,
+    name: 'Lunettes Prestige',
+    price: '3,200 DH',
+    image: 'https://images.pexels.com/photos/701877/pexels-photo-701877.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'lunette',
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: 'Montre Élégance',
+    price: '8,900 DH',
+    image: 'https://images.pexels.com/photos/277390/pexels-photo-277390.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'montre',
+    rating: 4.8,
+  },
+  {
+    id: 4,
+    name: 'Lunettes Aviateur Luxe',
+    price: '2,800 DH',
+    image: 'https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'lunette',
+    rating: 4.9,
+    isNew: true,
+  },
+  {
+    id: 5,
+    name: 'Montre Diamant',
+    price: '25,000 DH',
+    image: 'https://images.pexels.com/photos/1697214/pexels-photo-1697214.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'montre',
+    rating: 5,
+    isNew: true,
+  },
+  {
+    id: 6,
+    name: 'Lunettes Sport Luxe',
+    price: '4,500 DH',
+    image: 'https://images.pexels.com/photos/46710/pexels-photo-46710.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'lunette',
+    rating: 4.7,
+  },
+  {
+    id: 7,
+    name: 'Montre Chronographe',
+    price: '15,800 DH',
+    image: 'https://images.pexels.com/photos/125779/pexels-photo-125779.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'montre',
+    rating: 4.9,
+    isNew: true,
+  },
+  {
+    id: 8,
+    name: 'Lunettes Cat Eye',
+    price: '3,900 DH',
+    image: 'https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'lunette',
+    rating: 4.8,
+  },
+  {
+    id: 9,
+    name: 'Montre Automatique',
+    price: '18,500 DH',
+    image: 'https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'montre',
+    rating: 5,
+  },
+  {
+    id: 10,
+    name: 'Lunettes Vintage',
+    price: '2,600 DH',
+    image: 'https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'lunette',
+    rating: 4.6,
+  },
+  {
+    id: 11,
+    name: 'Montre Smart Luxe',
+    price: '22,000 DH',
+    image: 'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'montre',
+    rating: 4.7,
+    isNew: true,
+  },
+  {
+    id: 12,
+    name: 'Lunettes Polarisées',
+    price: '5,200 DH',
+    image: 'https://images.pexels.com/photos/46710/pexels-photo-46710.jpeg?auto=compress&cs=tinysrgb&w=600',
+    category: 'lunette',
+    rating: 4.9,
+  },
+];
+
+const ProductShowcase: React.FC<ProductShowcaseProps> = ({ onAddToCart }) => {
+  const montres = products.filter(p => p.category === 'montre');
+  const lunettes = products.filter(p => p.category === 'lunette');
+
+  const scrollToCollection = () => {
+    const element = document.getElementById('montres');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -10, rotateY: 5 }}
+      transition={{ duration: 0.6 }}
+      className="bg-gradient-to-br from-neutral-900 to-luxury-obsidian rounded-2xl shadow-2xl overflow-hidden group relative border border-luxury-gold/20"
+    >
+      {product.isNew && (
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          className="absolute top-4 left-4 z-10 bg-luxury-gold text-luxury-obsidian px-3 py-1 rounded-full text-sm font-bold shadow-lg"
+        >
+          Nouveau
+        </motion.div>
+      )}
+      
+      <div className="relative overflow-hidden aspect-square">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-luxury-obsidian/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        <div className="absolute top-4 right-4 flex flex-col space-y-2 transform translate-x-12 group-hover:translate-x-0 transition-transform duration-300">
+          <motion.button
+            whileHover={{ scale: 1.1, rotate: 10 }}
+            whileTap={{ scale: 0.9 }}
+            className="p-2 bg-white/90 backdrop-blur-sm text-luxury-obsidian rounded-full hover:bg-luxury-gold hover:text-white transition-colors duration-300 shadow-lg"
+          >
+            <Heart size={18} />
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.1, rotate: -10 }}
+            whileTap={{ scale: 0.9 }}
+            className="p-2 bg-white/90 backdrop-blur-sm text-luxury-obsidian rounded-full hover:bg-luxury-gold hover:text-white transition-colors duration-300 shadow-lg"
+          >
+            <Eye size={18} />
+          </motion.button>
+        </div>
+
+        {/* 3D Floating Elements */}
+        <motion.div
+          className="absolute bottom-4 left-4 w-8 h-8 bg-luxury-gold/20 rounded-full opacity-0 group-hover:opacity-100"
+          animate={{ 
+            y: [0, -10, 0],
+            rotate: [0, 180, 360] 
+          }}
+          transition={{ 
+            duration: 3, 
+            repeat: Infinity,
+            ease: "easeInOut" 
+          }}
+        />
+      </div>
+      
+      <div className="p-6 bg-gradient-to-br from-neutral-800 to-luxury-obsidian">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-xl font-playfair font-bold text-white">
+            {product.name}
+          </h3>
+          <div className="flex items-center space-x-1">
+            <Star className="w-4 h-4 fill-luxury-gold text-luxury-gold" />
+            <span className="text-sm text-luxury-gold font-semibold">{product.rating}</span>
+          </div>
+        </div>
+        <p className="text-2xl font-bold text-luxury-gold mb-4">{product.price}</p>
+        
+        <motion.button
+          whileHover={{ scale: 1.02, y: -2 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => onAddToCart(product)}
+          className="w-full bg-luxury-gold text-luxury-obsidian py-3 rounded-full font-bold hover:bg-white transition-all duration-300 flex items-center justify-center space-x-2 group shadow-lg hover:shadow-2xl"
+        >
+          <ShoppingCart size={18} className="group-hover:scale-110 transition-transform duration-300" />
+          <span>Ajouter au Panier</span>
+        </motion.button>
+      </div>
+    </motion.div>
+  );
+
+  return (
+    <div id="collections" className="py-20 bg-gradient-to-br from-neutral-900 via-luxury-obsidian to-neutral-900">
+      {/* Collection Header */}
+      <section className="mb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <motion.h2
+              className="text-5xl md:text-6xl font-playfair font-bold text-white mb-4"
+              animate={{ 
+                textShadow: [
+                  '0 0 20px rgba(212, 175, 55, 0.5)',
+                  '0 0 40px rgba(212, 175, 55, 0.8)',
+                  '0 0 20px rgba(212, 175, 55, 0.5)'
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              Collections Exclusives
+            </motion.h2>
+            <motion.div 
+              className="w-24 h-1 bg-luxury-gold mx-auto mb-6"
+              animate={{ scaleX: [1, 1.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <p className="text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed mb-8">
+              Découvrez notre sélection premium de montres et lunettes de luxe, 
+              choisies avec soin pour l'élite marocaine
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={scrollToCollection}
+              className="bg-luxury-gold text-luxury-obsidian px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all duration-300 shadow-lg hover:shadow-2xl"
+            >
+              Découvrir la Collection
+            </motion.button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Montres Section */}
+      <section id="montres" className="mb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <motion.h2
+              className="text-5xl md:text-6xl font-playfair font-bold text-white mb-4"
+              animate={{ 
+                textShadow: [
+                  '0 0 20px rgba(212, 175, 55, 0.5)',
+                  '0 0 40px rgba(212, 175, 55, 0.8)',
+                  '0 0 20px rgba(212, 175, 55, 0.5)'
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              Montres de Luxe
+            </motion.h2>
+            <motion.div 
+              className="w-24 h-1 bg-luxury-gold mx-auto mb-6"
+              animate={{ scaleX: [1, 1.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <p className="text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed">
+              Découvrez notre collection exclusive de montres suisses et françaises, 
+              symboles d'excellence et de raffinement
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {montres.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+              >
+                <ProductCard product={product} />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lunettes Section */}
+      <section id="lunettes">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <motion.h2
+              className="text-5xl md:text-6xl font-playfair font-bold text-white mb-4"
+              animate={{ 
+                textShadow: [
+                  '0 0 20px rgba(212, 175, 55, 0.5)',
+                  '0 0 40px rgba(212, 175, 55, 0.8)',
+                  '0 0 20px rgba(212, 175, 55, 0.5)'
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+            >
+              Lunettes de Prestige
+            </motion.h2>
+            <motion.div 
+              className="w-24 h-1 bg-luxury-gold mx-auto mb-6"
+              animate={{ scaleX: [1, 1.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+            />
+            <p className="text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed">
+              Protection et style s'unissent dans notre gamme de lunettes de soleil et de vue, 
+              conçues pour l'élite marocaine
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {lunettes.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+              >
+                <ProductCard product={product} />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default ProductShowcase;
