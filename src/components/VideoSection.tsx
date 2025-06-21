@@ -40,6 +40,10 @@ const VideoSection: React.FC = () => {
 
     const handleLoadedMetadata = () => {
       setDuration(video.duration);
+      // Auto-play the video when loaded
+      video.play().then(() => {
+        setIsPlaying(true);
+      }).catch(console.error);
     };
 
     video.addEventListener('timeupdate', updateProgress);
@@ -261,6 +265,7 @@ const VideoSection: React.FC = () => {
                 muted={isMuted}
                 playsInline
                 preload="metadata"
+                autoPlay
               />
               
               {/* Custom Video Controls Overlay */}
@@ -394,6 +399,10 @@ const VideoSection: React.FC = () => {
                       src={video.thumbnail}
                       alt={video.title}
                       className="w-full aspect-video object-cover rounded-lg mb-3 shadow-md"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = 'https://images.pexels.com/photos/364822/pexels-photo-364822.jpeg?auto=compress&cs=tinysrgb&w=400';
+                      }}
                     />
                     <h4 className="text-white font-semibold text-sm mb-1">{video.title}</h4>
                     <p className="text-neutral-400 text-xs">{video.description}</p>

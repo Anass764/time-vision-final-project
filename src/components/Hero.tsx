@@ -19,9 +19,23 @@ const Hero: React.FC = () => {
 
   return (
     <section id="accueil" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Background */}
+      {/* Video Background */}
       <div className="absolute inset-0 z-0">
-        <div className="w-full h-full bg-gradient-to-br from-luxury-obsidian via-neutral-900 to-luxury-obsidian relative">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src="/video2.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-luxury-obsidian/60"></div>
+      </div>
+
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 z-5">
+        <div className="w-full h-full relative">
           {/* Animated Particles */}
           <div className="absolute inset-0">
             {[...Array(20)].map((_, i) => (
@@ -48,7 +62,7 @@ const Hero: React.FC = () => {
 
           {/* 3D Watch Animation */}
           <motion.div
-            className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-10"
+            className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-20"
             animate={{ 
               rotateY: [0, 360],
               rotateX: [0, 15, 0, -15, 0],
@@ -72,7 +86,7 @@ const Hero: React.FC = () => {
 
           {/* 3D Glasses Animation */}
           <motion.div
-            className="absolute top-1/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 opacity-10"
+            className="absolute top-1/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 opacity-20"
             animate={{ 
               rotateZ: [0, 10, -10, 0],
               y: [0, -20, 0],
@@ -92,20 +106,6 @@ const Hero: React.FC = () => {
             </div>
           </motion.div>
         </div>
-      </div>
-
-      {/* Video Background Overlay */}
-      <div className="absolute inset-0 z-5">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover opacity-20"
-          poster="https://images.pexels.com/photos/364822/pexels-photo-364822.jpeg?auto=compress&cs=tinysrgb&w=1920"
-        >
-          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
-        </video>
       </div>
 
       {/* Content */}

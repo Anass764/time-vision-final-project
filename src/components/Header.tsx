@@ -252,7 +252,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
         </AnimatePresence>
       </motion.header>
 
-      {/* Enhanced Search Modal */}
+      {/* Enhanced Search Modal - Centered */}
       <AnimatePresence>
         {isSearchOpen && (
           <>
@@ -260,19 +260,20 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
               onClick={() => setIsSearchOpen(false)}
             />
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: -50 }}
+              initial={{ opacity: 0, scale: 0.8, y: 50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: -50 }}
-              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-white to-neutral-50 rounded-3xl shadow-2xl z-50 w-[500px] max-w-[90vw] border border-luxury-gold/20"
+              exit={{ opacity: 0, scale: 0.8, y: 50 }}
+              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-white to-neutral-50 rounded-3xl shadow-2xl z-50 w-[600px] max-w-[90vw] border border-luxury-gold/20"
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="p-8">
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-8">
                   <motion.h3 
-                    className="text-3xl font-playfair font-bold text-luxury-obsidian"
+                    className="text-4xl font-playfair font-bold text-luxury-obsidian"
                     animate={{ 
                       textShadow: [
                         '0 0 10px rgba(212, 175, 55, 0.3)',
@@ -288,20 +289,20 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
                     whileHover={{ scale: 1.1, rotate: 90 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setIsSearchOpen(false)}
-                    className="p-2 hover:bg-luxury-gold/10 rounded-full transition-colors"
+                    className="p-3 hover:bg-luxury-gold/10 rounded-full transition-colors"
                   >
                     <X size={24} className="text-luxury-obsidian" />
                   </motion.button>
                 </div>
                 
-                <form onSubmit={handleSearch} className="mb-6">
+                <form onSubmit={handleSearch} className="mb-8">
                   <div className="relative">
                     <motion.input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Rechercher montres, lunettes..."
-                      className="w-full px-6 py-4 bg-white border-2 border-luxury-gold/30 rounded-2xl focus:ring-4 focus:ring-luxury-gold/20 focus:border-luxury-gold transition-all duration-300 pr-14 text-lg"
+                      className="w-full px-6 py-5 bg-white border-2 border-luxury-gold/30 rounded-2xl focus:ring-4 focus:ring-luxury-gold/20 focus:border-luxury-gold transition-all duration-300 pr-16 text-lg"
                       autoFocus
                       whileFocus={{ scale: 1.02 }}
                     />
@@ -309,16 +310,16 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
                       type="submit"
                       whileHover={{ scale: 1.1, rotate: 10 }}
                       whileTap={{ scale: 0.9 }}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 bg-luxury-gold text-white rounded-xl hover:bg-luxury-darkGold transition-colors"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 p-3 bg-luxury-gold text-white rounded-xl hover:bg-luxury-darkGold transition-colors"
                     >
                       <Search size={20} />
                     </motion.button>
                   </div>
                 </form>
                 
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-luxury-obsidian mb-3">Suggestions populaires</h4>
-                  <div className="flex flex-wrap gap-2">
+                <div className="space-y-6">
+                  <h4 className="text-xl font-semibold text-luxury-obsidian mb-4">Suggestions populaires</h4>
+                  <div className="flex flex-wrap gap-3">
                     {['Montre Royale', 'Lunettes Prestige', 'Montre Diamant', 'Lunettes Aviateur'].map((suggestion, index) => (
                       <motion.button
                         key={suggestion}
@@ -328,7 +329,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
                           setSearchQuery(suggestion);
                           handleSearch(new Event('submit') as any);
                         }}
-                        className="px-4 py-2 bg-luxury-gold/10 text-luxury-obsidian rounded-full hover:bg-luxury-gold hover:text-white transition-all duration-300 text-sm font-medium border border-luxury-gold/30"
+                        className="px-6 py-3 bg-luxury-gold/10 text-luxury-obsidian rounded-full hover:bg-luxury-gold hover:text-white transition-all duration-300 font-medium border border-luxury-gold/30"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
@@ -344,7 +345,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
         )}
       </AnimatePresence>
 
-      {/* Enhanced Login Modal */}
+      {/* Enhanced Login Modal - Centered */}
       <AnimatePresence>
         {isLoginOpen && (
           <>
@@ -352,20 +353,21 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
               onClick={() => setIsLoginOpen(false)}
             />
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
+              initial={{ opacity: 0, scale: 0.8, rotateY: -10 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              exit={{ opacity: 0, scale: 0.9, rotateY: 10 }}
-              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-white to-neutral-50 rounded-3xl shadow-2xl z-50 w-[450px] max-w-[90vw] border border-luxury-gold/20"
+              exit={{ opacity: 0, scale: 0.8, rotateY: 10 }}
+              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-white to-neutral-50 rounded-3xl shadow-2xl z-50 w-[500px] max-w-[90vw] border border-luxury-gold/20"
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="p-8">
                 <div className="flex items-center justify-between mb-8">
                   <div>
                     <motion.h3 
-                      className="text-3xl font-playfair font-bold text-luxury-obsidian"
+                      className="text-4xl font-playfair font-bold text-luxury-obsidian"
                       animate={{ 
                         textShadow: [
                           '0 0 10px rgba(212, 175, 55, 0.3)',
@@ -377,13 +379,13 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
                     >
                       Connexion
                     </motion.h3>
-                    <p className="text-neutral-600 mt-1">Accédez à votre espace privilégié</p>
+                    <p className="text-neutral-600 mt-2 text-lg">Accédez à votre espace privilégié</p>
                   </div>
                   <motion.button
                     whileHover={{ scale: 1.1, rotate: 90 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setIsLoginOpen(false)}
-                    className="p-2 hover:bg-luxury-gold/10 rounded-full transition-colors"
+                    className="p-3 hover:bg-luxury-gold/10 rounded-full transition-colors"
                   >
                     <X size={24} className="text-luxury-obsidian" />
                   </motion.button>
@@ -541,6 +543,10 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
                             src={item.image}
                             alt={item.name}
                             className="w-16 h-16 object-cover rounded-xl shadow-md"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = 'https://images.pexels.com/photos/364822/pexels-photo-364822.jpeg?auto=compress&cs=tinysrgb&w=400';
+                            }}
                           />
                           <motion.div
                             className="absolute -top-1 -right-1 w-4 h-4 bg-luxury-gold rounded-full"
@@ -550,7 +556,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
                         </div>
                         <div className="flex-1 relative z-10">
                           <h3 className="font-semibold text-luxury-obsidian">{item.name}</h3>
-                          <p className="text-luxury-gold font-bold">{item.price}</p>
+                          <p className="text-luxury-gold font-bold">{item.price} DH</p>
                           <div className="flex items-center space-x-2 mt-2">
                             <motion.button
                               whileHover={{ scale: 1.1 }}
