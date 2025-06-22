@@ -27,8 +27,13 @@ const Hero: React.FC = () => {
           loop
           playsInline
           className="w-full h-full object-cover"
+          onLoadedData={(e) => {
+            const video = e.target as HTMLVideoElement;
+            video.play().catch(console.error);
+          }}
         >
           <source src="/video2.mp4" type="video/mp4" />
+          <source src="/video1.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-luxury-obsidian/60"></div>
       </div>

@@ -10,12 +10,6 @@ const team = [
     image: 'WZPZ4855.JPG',
   },
   {
-    name: 'Latifa',
-    role: 'Infographiste',
-    description: 'Créatrice des visuels et de l\'identité artistique',
-    image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400',
-  },
-  {
     name: 'Douaa',
     role: 'Développeur',
     description: 'Experte en développement et optimisation technique',
@@ -187,7 +181,7 @@ const AboutSection: React.FC = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             {team.map((member, index) => (
               <motion.div
                 key={member.name}

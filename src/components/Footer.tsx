@@ -180,7 +180,7 @@ const Footer: React.FC = () => {
             >
               <span>Créé avec</span>
               <Heart className="w-4 h-4 text-error-500 fill-current" />
-              <span>par Anass Naji, Latifa, Douaa & Yasser</span>
+              <span>par Anass Naji, Douaa & Yasser</span>
             </motion.div>
 
             <motion.div

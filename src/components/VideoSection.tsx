@@ -46,14 +46,23 @@ const VideoSection: React.FC = () => {
       }).catch(console.error);
     };
 
+    const handleEnded = () => {
+      setIsPlaying(false);
+      // Restart the video for infinite loop
+      video.currentTime = 0;
+      video.play().then(() => {
+        setIsPlaying(true);
+      }).catch(console.error);
+    };
+
     video.addEventListener('timeupdate', updateProgress);
     video.addEventListener('loadedmetadata', handleLoadedMetadata);
-    video.addEventListener('ended', () => setIsPlaying(false));
+    video.addEventListener('ended', handleEnded);
 
     return () => {
       video.removeEventListener('timeupdate', updateProgress);
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      video.removeEventListener('ended', () => setIsPlaying(false));
+      video.removeEventListener('ended', handleEnded);
     };
   }, [currentVideo]);
 
@@ -266,6 +275,11 @@ const VideoSection: React.FC = () => {
                 playsInline
                 preload="metadata"
                 autoPlay
+                loop
+                onLoadedData={(e) => {
+                  const video = e.target as HTMLVideoElement;
+                  video.play().catch(console.error);
+                }}
               />
               
               {/* Custom Video Controls Overlay */}

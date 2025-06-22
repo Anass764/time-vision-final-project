@@ -252,22 +252,21 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
         </AnimatePresence>
       </motion.header>
 
-      {/* Enhanced Search Modal - Centered */}
+      {/* Enhanced Search Modal - Fixed Centering */}
       <AnimatePresence>
         {isSearchOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-              onClick={() => setIsSearchOpen(false)}
-            />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
+            onClick={() => setIsSearchOpen(false)}
+          >
             <motion.div
               initial={{ opacity: 0, scale: 0.8, y: 50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: 50 }}
-              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-white to-neutral-50 rounded-3xl shadow-2xl z-50 w-[600px] max-w-[90vw] border border-luxury-gold/20"
+              className="bg-gradient-to-br from-white to-neutral-50 rounded-3xl shadow-2xl w-full max-w-2xl border border-luxury-gold/20"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="p-8">
@@ -341,26 +340,25 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
                 </div>
               </div>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Enhanced Login Modal - Centered */}
+      {/* Enhanced Login Modal - Fixed Centering */}
       <AnimatePresence>
         {isLoginOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-              onClick={() => setIsLoginOpen(false)}
-            />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
+            onClick={() => setIsLoginOpen(false)}
+          >
             <motion.div
               initial={{ opacity: 0, scale: 0.8, rotateY: -10 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               exit={{ opacity: 0, scale: 0.8, rotateY: 10 }}
-              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-white to-neutral-50 rounded-3xl shadow-2xl z-50 w-[500px] max-w-[90vw] border border-luxury-gold/20"
+              className="bg-gradient-to-br from-white to-neutral-50 rounded-3xl shadow-2xl w-full max-w-lg border border-luxury-gold/20"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="p-8">
@@ -458,7 +456,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, updateCartItem, removeFromCa
                 </div>
               </div>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
 
